@@ -17,7 +17,7 @@ import java.util.concurrent.CompletableFuture;
 public class StormSubject extends Subject {
 
   @Override
-  public Cost cost() { return new Cost(8, COSTTYPE.MULTIPLICATIVE); }
+  public Cost cost() { return new Cost(4, COSTTYPE.MULTIPLICATIVE); }
 
   @Override
   public CompletableFuture<List<Targetable>> getTargets(Targetable caster, Spell spell) {
@@ -49,13 +49,13 @@ public class StormSubject extends Subject {
             pos.getY(),
             pos.getZ()
           ),
-          1,
-          1,
-          1
+          radius * 2,
+          radius * 2,
+          radius * 2
         )
       );
 
-      if(entities.size() > 0)
+      if(!entities.isEmpty())
         for(var entity: entities)
           targets.add(new EntityTargetable(entity));
       else

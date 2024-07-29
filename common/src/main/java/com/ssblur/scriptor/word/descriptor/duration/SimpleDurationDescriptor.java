@@ -7,8 +7,8 @@ public class SimpleDurationDescriptor extends Descriptor implements DurationDesc
   double duration;
   boolean duplicates;
 
-  public SimpleDurationDescriptor(int cost, double duration) {
-    this.cost = new Cost(cost, COSTTYPE.ADDITIVE);
+  public SimpleDurationDescriptor(Cost cost, double duration) {
+    this.cost = cost;
     this.duration = duration;
     this.duplicates = false;
   }

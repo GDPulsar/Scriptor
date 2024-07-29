@@ -22,7 +22,7 @@ public class HarmAction extends Action {
     }
 
     strength = Math.max(strength, 0);
-    strength *= 2;
+    strength = (5f*strength - (0.025f*(strength*strength)))/5f;
 
     var itemTarget = ItemTargetableHelper.getTargetItemStack(targetable, false, itemStack -> !itemStack.isEmpty() && itemStack.isDamageableItem());
     if (itemTarget.isDamageableItem()) {
@@ -47,7 +47,7 @@ public class HarmAction extends Action {
         if(target.getMobType() == MobType.UNDEAD)
           target.heal((float) strength);
         else
-          target.hurt(ScriptorDamage.magic(source, source), (float) strength);
+          target.hurt(ScriptorDamage.magic(source), (float) strength);
     }
   }
   @Override

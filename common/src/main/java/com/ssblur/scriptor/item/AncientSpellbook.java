@@ -6,6 +6,7 @@ import com.ssblur.scriptor.events.reloadlisteners.TomeReloadListener;
 import com.ssblur.scriptor.helpers.LimitedBookSerializer;
 import com.ssblur.scriptor.word.Spell;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -59,7 +60,7 @@ public class AncientSpellbook extends Item {
         );
         level.addFreshEntity(entity);
       }
-      player.sendSystemMessage(Component.translatable("extra.scriptor.spell_get", Component.translatable(resource.getName())));
+      player.sendSystemMessage(Component.translatable("extra.scriptor.spell_get", Component.translatable(resource.getName()).setStyle(Style.EMPTY.withObfuscated(true))));
       player.getItemInHand(interactionHand).shrink(1);
       return InteractionResultHolder.consume(player.getItemInHand(interactionHand));
     }

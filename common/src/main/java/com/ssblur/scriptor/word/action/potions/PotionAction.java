@@ -14,11 +14,13 @@ public class PotionAction extends Action {
   MobEffect mobEffect;
   double durationScale;
   double strengthScale;
+  int maximumLevel;
   Cost cost;
-  public PotionAction(MobEffect mobEffect, double durationScale, double strengthScale, Cost cost) {
+  public PotionAction(MobEffect mobEffect, double durationScale, double strengthScale, int maximumLevel, Cost cost) {
     this.mobEffect = mobEffect;
     this.durationScale = durationScale;
     this.strengthScale = strengthScale;
+    this.maximumLevel = maximumLevel;
     this.cost = cost;
   }
 
@@ -33,14 +35,14 @@ public class PotionAction extends Action {
         duration += durationDescriptor.durationModifier();
     }
 
-    strength = Math.max(strength, 0);
-    strength *= strengthScale;
+    strength = Math.max(strength, 1);
+    strength = strengthScale * Math.sqrt(strength);
     duration *= durationScale;
 
     // Maybe add poison-tipped enchant?
 
     if(targetable instanceof EntityTargetable entityTargetable && entityTargetable.getTargetEntity() instanceof LivingEntity living)
-      living.addEffect(new MobEffectInstance(mobEffect, (int) Math.round(duration), (int) Math.floor(strength)));
+      living.addEffect(new MobEffectInstance(mobEffect, (int) Math.round(duration), (int)Math.min(Math.floor(strength), maximumLevel)));
     else
       applyToPosition(caster, targetable, descriptors, strength, duration);
   }

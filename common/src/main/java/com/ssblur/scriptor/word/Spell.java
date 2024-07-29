@@ -84,6 +84,8 @@ public record Spell(
         caster = focus.modifyFocus(caster);
     }
 
+    ScriptorMod.LOGGER.info("spell cost: " + this.cost());
+
     var targetFuture = subject.getTargets(caster, this);
 
     for(var descriptor: spells[0].deduplicatedDescriptors())

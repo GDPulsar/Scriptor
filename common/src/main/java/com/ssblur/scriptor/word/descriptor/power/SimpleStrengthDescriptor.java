@@ -7,8 +7,8 @@ public class SimpleStrengthDescriptor extends Descriptor implements StrengthDesc
   double strength;
   boolean allowDuplication = false;
 
-  public SimpleStrengthDescriptor(int cost, double strength) {
-    this.cost = new Cost(cost, COSTTYPE.ADDITIVE);
+  public SimpleStrengthDescriptor(double cost, double strength) {
+    this.cost = new Cost(cost, COSTTYPE.MULTIPLICATIVE);
     this.strength = strength;
   }
 

@@ -5,7 +5,7 @@ import com.ssblur.scriptor.word.descriptor.duration.SimpleDurationDescriptor;
 public class SpeedDurationDescriptor extends SimpleDurationDescriptor implements SpeedDescriptor {
   double speed;
 
-  public SpeedDurationDescriptor(int cost, double duration, double speed) {
+  public SpeedDurationDescriptor(Cost cost, double duration, double speed) {
     super(cost, duration);
     this.speed = speed;
   }

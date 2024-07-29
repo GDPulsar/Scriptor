@@ -12,7 +12,7 @@ import java.util.Random;
 public class WitherAction extends PotionAction {
   static final Random RANDOM = new Random();
   public WitherAction() {
-    super(MobEffects.WITHER, 30, 1d/3d, new Word.Cost(12, Word.COSTTYPE.ADDITIVE));
+    super(MobEffects.WITHER, 15, 1d/2d, 1, new Word.Cost(12, Word.COSTTYPE.ADDITIVE));
   }
 
   @Override

@@ -22,6 +22,7 @@ public class HealAction extends Action {
     }
 
     strength = Math.max(strength, 0);
+    strength = (5f*strength - (0.025f*(strength*strength)))/5f;
 
     var itemTarget = ItemTargetableHelper.getTargetItemStack(targetable, false, itemStack -> !itemStack.isEmpty() && itemStack.isDamageableItem());
     if (itemTarget.isDamageableItem()) {
@@ -44,7 +45,7 @@ public class HealAction extends Action {
       Entity source = caster instanceof EntityTargetable casterEntity ? casterEntity.getTargetEntity() : entity;
       if(entity instanceof LivingEntity target)
         if(target.getMobType() == MobType.UNDEAD)
-          target.hurt(ScriptorDamage.magic(source, source), (float) strength);
+          target.hurt(ScriptorDamage.magic(source), (float) strength);
         else
           target.heal((float) strength);
     }

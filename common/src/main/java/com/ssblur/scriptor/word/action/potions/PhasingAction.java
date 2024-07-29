@@ -12,7 +12,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class PhasingAction extends PotionAction {
   public PhasingAction() {
-    super(ScriptorEffects.PHASING.get(), 20, 1d, new Cost(8, COSTTYPE.ADDITIVE));
+    super(ScriptorEffects.PHASING.get(), 20, 1d, 0, new Cost(8, COSTTYPE.ADDITIVE));
   }
 
   @Override

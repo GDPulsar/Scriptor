@@ -46,7 +46,7 @@ public class PhasedBlockBlockEntity extends BlockEntity {
   }
 
   public static void phase(Level level, BlockPos pos) {
-    phase(level, pos, 5);
+    phase(level, pos, 3);
   }
 
   public static void phase(Level level, BlockPos pos, int duration) {

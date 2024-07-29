@@ -23,7 +23,7 @@ public class LightAction extends Action {
     int seconds = 6;
     for(var d: descriptors) {
       if(d instanceof DurationDescriptor durationDescriptor)
-        seconds += 3 * durationDescriptor.durationModifier();
+        seconds += (int)(3 * durationDescriptor.durationModifier());
     }
 
     if(targetable instanceof EntityTargetable entityTargetable && entityTargetable.getTargetEntity() instanceof LivingEntity living) {

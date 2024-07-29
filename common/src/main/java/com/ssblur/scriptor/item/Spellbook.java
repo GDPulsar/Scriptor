@@ -8,6 +8,7 @@ import com.ssblur.scriptor.helpers.ComponentHelper;
 import com.ssblur.scriptor.helpers.LimitedBookSerializer;
 import com.ssblur.scriptor.helpers.SpellbookHelper;
 import com.ssblur.scriptor.item.interfaces.ItemWithCustomRenderer;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.screens.Screen;
@@ -18,6 +19,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FormattedText;
+import net.minecraft.network.chat.Style;
 import net.minecraft.util.FormattedCharSequence;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringUtil;
@@ -46,7 +48,8 @@ public class Spellbook extends WrittenBookItem implements ItemWithCustomRenderer
   public Component getName(ItemStack itemStack) {
     CompoundTag tag = itemStack.getTag();
     if (tag != null) {
-      String string = tag.getString("title");
+      var scriptor = tag.getCompound("scriptor");
+      String string = (scriptor.contains("identified") ? "" : "§k") + tag.getString("title");
       if (!StringUtil.isNullOrEmpty(string)) {
         return Component.translatable(string);
       }
@@ -83,12 +86,16 @@ public class Spellbook extends WrittenBookItem implements ItemWithCustomRenderer
 
   @Override
   public void appendHoverText(ItemStack itemStack, @Nullable Level level, List<Component> list, TooltipFlag tooltipFlag) {
-    super.appendHoverText(itemStack, level, list, tooltipFlag);
-
-    if(itemStack.getTag() != null && itemStack.getTag().getCompound("scriptor") != null) {
+    if (itemStack.hasTag()) {
       CompoundTag tag = itemStack.getTag();
-
       var scriptor = tag.getCompound("scriptor");
+      String string = (scriptor.contains("identified") ? "" : "§k") + tag.getString("author");
+      if (!StringUtil.isNullOrEmpty(string)) {
+        list.add(Component.translatable("book.byAuthor", string).withStyle(ChatFormatting.GRAY));
+      }
+
+      list.add(Component.translatable("book.generation." + tag.getInt("generation")).withStyle(ChatFormatting.GRAY));
+
       if(scriptor.contains("identified")) {
         if(Screen.hasShiftDown())
           for(var key: scriptor.getCompound("identified").getAllKeys()) {
@@ -199,17 +206,18 @@ public class Spellbook extends WrittenBookItem implements ItemWithCustomRenderer
     var font = Minecraft.getInstance().font;
     var tag = itemStack.getTag();
     if(tag != null && tag.contains("pages")) {
+      var scriptor = tag.getCompound("scriptor");
       var pages = tag.getList("pages", Tag.TAG_STRING);
       List<FormattedCharSequence> sequence = new ArrayList<>();
       if (page >= pages.size()) {
         if (tag.contains("title")) {
           if(I18n.exists(tag.getString("title")))
-            sequence.addAll(font.split(FormattedText.of(I18n.get(tag.getString("title"))), 80));
+            sequence.addAll(font.split(FormattedText.of(I18n.get(tag.getString("title")), Style.EMPTY.withObfuscated(!scriptor.contains("identified"))), 80));
           else
-            sequence.addAll(font.split(FormattedText.of(tag.getString("title")), 80));
+            sequence.addAll(font.split(FormattedText.of(tag.getString("title"), Style.EMPTY.withObfuscated(!scriptor.contains("identified"))), 80));
         }
         if (tag.contains("author"))
-          sequence.addAll(font.split(FormattedText.of("By " + tag.getString("author")), 80));
+          sequence.addAll(font.split(FormattedText.composite(FormattedText.of("By "), FormattedText.of(tag.getString("author"), Style.EMPTY.withObfuscated(!scriptor.contains("identified")))), 80));
       } else
         sequence = font.split(FormattedText.of(LimitedBookSerializer.decodeText(pages.getString(page))), 80);
       for (int iter = 0; iter < sequence.size(); iter++)

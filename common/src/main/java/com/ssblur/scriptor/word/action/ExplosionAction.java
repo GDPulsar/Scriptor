@@ -14,17 +14,15 @@ public class ExplosionAction extends Action {
     int strength = 2;
     for(var d: descriptors) {
       if(d instanceof StrengthDescriptor strengthDescriptor)
-        strength += strengthDescriptor.strengthModifier();
+        strength += (int)strengthDescriptor.strengthModifier();
     }
 
     ServerLevel level = (ServerLevel) targetable.getLevel();
     var pos = targetable.getTargetPos();
 
-    float power = 0;
-    for(int i = 1; i <= strength; i++)
-      power += 1.5f / strength;
+    float power = (float) (Math.log(strength) / Math.log(1.45));
 
-    level.explode(null, pos.x, pos.y + .25, pos.z, power, Level.ExplosionInteraction.TNT);
+    level.explode(null, pos.x, pos.y + .25, pos.z, power, Level.ExplosionInteraction.NONE);
   }
 
   @Override

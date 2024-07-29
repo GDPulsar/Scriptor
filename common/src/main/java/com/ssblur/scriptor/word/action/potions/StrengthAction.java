@@ -9,7 +9,7 @@ import net.minecraft.world.item.ItemStack;
 
 public class StrengthAction extends PotionAction {
   public StrengthAction() {
-    super(MobEffects.DAMAGE_BOOST, 40, 1d/3d, new Word.Cost(9, Word.COSTTYPE.ADDITIVE));
+    super(MobEffects.DAMAGE_BOOST, 20, 1d/2d, 3, new Word.Cost(9, Word.COSTTYPE.ADDITIVE));
   }
 
   @Override
