@@ -1,5 +1,6 @@
 package com.ssblur.scriptor.word;
 
+import com.ssblur.scriptor.ScriptorMod;
 import com.ssblur.scriptor.api.word.Descriptor;
 import com.ssblur.scriptor.api.word.Subject;
 import com.ssblur.scriptor.api.word.Word;
